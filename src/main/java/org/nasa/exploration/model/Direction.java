@@ -10,7 +10,7 @@ public enum Direction {
             return E;
         }
 
-        public Position moveOneStep(int x, int y) {
+        public Position calculateNextPosition(int x, int y) {
             return new Position(x, y+1);
         }
     },
@@ -23,7 +23,7 @@ public enum Direction {
             return W;
         }
 
-        public Position moveOneStep(int x, int y) {
+        public Position calculateNextPosition(int x, int y) {
             return new Position(x, y-1);
         }
     },
@@ -36,7 +36,7 @@ public enum Direction {
             return N;
         }
 
-        public Position moveOneStep(int x, int y) {
+        public Position calculateNextPosition(int x, int y) {
             return new Position(x-1, y);
         }
     },
@@ -49,7 +49,7 @@ public enum Direction {
             return S;
         }
 
-        public Position moveOneStep(int x, int y) {
+        public Position calculateNextPosition(int x, int y) {
             return new Position(x+1, y);
         }
     };
@@ -58,5 +58,5 @@ public enum Direction {
 
     public abstract Direction rotateRight();
 
-    public abstract Position moveOneStep(int x, int y);
+    public abstract Position calculateNextPosition(int x, int y);
 }

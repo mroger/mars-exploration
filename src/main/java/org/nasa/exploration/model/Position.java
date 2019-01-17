@@ -8,6 +8,12 @@ class Position {
     private int y;
 
     Position(int x, int y) {
+        if (x < 0) {
+            throw new IllegalArgumentException("X coordinate should not be a negative number");
+        }
+        if (y < 0) {
+            throw new IllegalArgumentException("Y coordinate should not be a negative number");
+        }
         this.x = x;
         this.y = y;
     }
