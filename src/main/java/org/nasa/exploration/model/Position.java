@@ -2,12 +2,12 @@ package org.nasa.exploration.model;
 
 import java.util.Objects;
 
-class Position {
+final class Position {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
-    Position(int x, int y) {
+    Position(final int x, final int y) {
         if (x < 0) {
             throw new IllegalArgumentException("X coordinate should not be a negative number");
         }

@@ -1,6 +1,8 @@
 package org.nasa.exploration.model;
 
-public enum Direction {
+import java.util.Arrays;
+
+enum Direction {
     N {
         public Direction rotateLeft() {
             return W;
@@ -53,6 +55,10 @@ public enum Direction {
             return new Position(x+1, y);
         }
     };
+
+    public static boolean isValid(String facingDirection) {
+        return Arrays.asList("N", "S", "E", "W").contains(facingDirection);
+    }
 
     public abstract Direction rotateLeft();
 

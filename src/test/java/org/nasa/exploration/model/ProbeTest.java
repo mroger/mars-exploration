@@ -9,12 +9,16 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.nasa.exploration.model.exception.PositionOutOfBoundsException;
 
+import java.util.UUID;
+
 class ProbeTest {
 
     private static final Direction NORTH = Direction.N;
     private static final Direction WEST = Direction.W;
     private static final Direction EAST = Direction.E;
     private static final Direction SOUTH = Direction.S;
+
+    private static final UUID ANY_ID = UUID.randomUUID();
 
     private Plateau plateau;
 
@@ -29,7 +33,7 @@ class ProbeTest {
         @Test
         void shouldThrowException_whenPositionIsNull() {
             Throwable exception = assertThrows(
-                IllegalArgumentException.class, () -> new Probe(null, SOUTH, plateau)
+                IllegalArgumentException.class, () -> new Probe(ANY_ID,null, SOUTH, plateau)
             );
 
             assertEquals("Position should not be null", exception.getMessage());
@@ -39,7 +43,7 @@ class ProbeTest {
         void shouldThrowException_whenDirectionIsNull() {
             Position position = new Position(2, 2);
             Throwable exception = assertThrows(
-                IllegalArgumentException.class, () -> new Probe(position, null, plateau)
+                IllegalArgumentException.class, () -> new Probe(ANY_ID, position, null, plateau)
             );
 
             assertEquals("Direction should not be null", exception.getMessage());
@@ -49,7 +53,7 @@ class ProbeTest {
         void shouldThrowException_whenPlateauIsNull() {
             Position position = new Position(2, 2);
             Throwable exception = assertThrows(
-                IllegalArgumentException.class, () -> new Probe(position, EAST, null)
+                IllegalArgumentException.class, () -> new Probe(ANY_ID, position, EAST, null)
             );
 
             assertEquals("Plateau should not be null", exception.getMessage());
@@ -59,7 +63,8 @@ class ProbeTest {
         void shouldCreateProbe() {
             Position position = new Position(2, 2);
             Direction direction = SOUTH;
-            Probe probe = new Probe(position, direction, plateau);
+            UUID id = UUID.randomUUID();
+            Probe probe = new Probe(id, position, direction, plateau);
 
             assertThat(probe.getPosition()).isEqualTo(new Position(2, 2));
             assertThat(probe.getDirection()).isEqualTo(direction);
@@ -215,6 +220,6 @@ class ProbeTest {
     }
 
     private Probe createProbe(int x, int y, Direction d, Plateau plateau) {
-        return new Probe(new Position(x, y), d, plateau);
+        return new Probe(ANY_ID, new Position(x, y), d, plateau);
     }
 }
