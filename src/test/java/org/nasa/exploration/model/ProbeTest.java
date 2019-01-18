@@ -70,6 +70,16 @@ class ProbeTest {
         }
 
         @Test
+        void shouldThrowException_whenTryingToPutProbeOutsidePlateau() {
+            Position position = new Position(10, 20);
+            Throwable exception = assertThrows(
+                PositionOutOfBoundsException.class, () -> new Probe(ANY_ID, position, EAST, plateau)
+            );
+
+            assertEquals("New position is out of bounds", exception.getMessage());
+        }
+
+        @Test
         void shouldCreateProbe() {
             Position position = new Position(2, 2);
             Direction direction = SOUTH;
