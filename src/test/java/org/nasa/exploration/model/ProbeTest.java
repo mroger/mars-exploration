@@ -31,6 +31,16 @@ class ProbeTest {
     class WhenNew {
 
         @Test
+        void shouldThrowException_whenIdIsNull() {
+            Position position = new Position(2, 2);
+            Throwable exception = assertThrows(
+                IllegalArgumentException.class, () -> new Probe(null, position, SOUTH, plateau)
+            );
+
+            assertEquals("Id should not be null", exception.getMessage());
+        }
+
+        @Test
         void shouldThrowException_whenPositionIsNull() {
             Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> new Probe(ANY_ID,null, SOUTH, plateau)
