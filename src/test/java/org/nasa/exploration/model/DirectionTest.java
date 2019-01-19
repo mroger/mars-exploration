@@ -95,4 +95,32 @@ class DirectionTest {
             assertThat(newPosition).isEqualTo(new Position(9, 15));
         }
     }
+
+    @Nested
+    class WhenValidating {
+        @Test
+        void shouldBeAValidFacingDirection_whenFacingDirectionIsN() {
+            assertThat(Direction.isValid("N")).isTrue();
+        }
+
+        @Test
+        void shouldBeAValidFacingDirection_whenFacingDirectionIsE() {
+            assertThat(Direction.isValid("E")).isTrue();
+        }
+
+        @Test
+        void shouldBeAValidFacingDirection_whenFacingDirectionIsS() {
+            assertThat(Direction.isValid("S")).isTrue();
+        }
+
+        @Test
+        void shouldBeAValidFacingDirection_whenFacingDirectionIsW() {
+            assertThat(Direction.isValid("W")).isTrue();
+        }
+
+        @Test
+        void shouldBeAnInvalidFacingDirection() {
+            assertThat(Direction.isValid("B")).isFalse();
+        }
+    }
 }
