@@ -1,4 +1,4 @@
-package org.nasa.exploration.model;
+package org.nasa.exploration.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +8,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.nasa.exploration.model.MissionControl;
+import org.nasa.exploration.model.ProbeAggregate;
 import org.nasa.exploration.model.exception.PositionAlreadyTakenException;
 import org.nasa.exploration.model.exception.PositionOutOfBoundsException;
 
