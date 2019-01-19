@@ -7,6 +7,12 @@ final class Plateau {
     private final int width;
     private final int height;
 
+    /**
+     * Constructed a Plateau where the probes will be positioned.
+     *
+     * @param width plateau width
+     * @param height plateau height
+     */
     Plateau(final int width, final int height) {
         if (width < 0) {
             throw new IllegalArgumentException("Plateau width should not be a negative number");
@@ -19,16 +25,32 @@ final class Plateau {
         this.height = height;
     }
 
+    /**
+     * Plateau width
+     *
+     * @return plateau width
+     */
     int getWidth() {
         return width;
     }
 
+    /**
+     * Plateau height
+     *
+     * @return plateau height
+     */
     int getHeight() {
         return height;
     }
 
-    boolean contains(Position newPosition) {
-        return newPosition.getX() <= width && newPosition.getY() <= height;
+    /**
+     * Checks if the position passed as parameter is inside the plateau area
+     *
+     * @param position the position being tested
+     * @return true if the point is inside the plateau, false otherwise
+     */
+    boolean contains(Position position) {
+        return position.getX() <= width && position.getY() <= height;
     }
 
     @Override

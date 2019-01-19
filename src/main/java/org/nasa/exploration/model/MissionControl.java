@@ -16,6 +16,12 @@ public class MissionControl {
     private final Map<Position, ProbeAggregate> probesByPosition;
     private final Plateau plateau;
 
+    /**
+     * Mission control class that holds probes created and put over a plateau
+     *
+     * @param width Width of the plateau
+     * @param height Height of the plateau
+     */
     public MissionControl(int width, int height) {
         if (width < 0) {
             throw new IllegalArgumentException("Plateau width should not be a negative number");
@@ -29,11 +35,12 @@ public class MissionControl {
     }
 
     /**
+     * Creates a probe and holds it in maps by UUID and by position
      *
-     * @param x
-     * @param y
-     * @param facingDirection
-     * @return
+     * @param x x-coordinate of the probe
+     * @param y y-coordinate of the probe
+     * @param facingDirection facing direction of the probe
+     * @return a new ProbeAggregate
      */
     public ProbeAggregate createProbe(int x, int y, String facingDirection) {
         validateProbeCreationParameters(x, y, facingDirection);
@@ -55,6 +62,12 @@ public class MissionControl {
         return probeAggregate;
     }
 
+    /**
+     * Searches a probe in the map by its id
+     *
+     * @param id id of the probe
+     * @return a probe if its id exists in the map
+     */
     public Optional<ProbeAggregate> getProbeAggregateById(String id) {
         if (isEmpty(id)) {
             throw new IllegalArgumentException("Probe id should not be null nor empty");
@@ -62,10 +75,20 @@ public class MissionControl {
         return Optional.ofNullable(probesByUUID.get(UUID.fromString(id)));
     }
 
+    /**
+     * Plateau width
+     *
+     * @return plateau width
+     */
     public int getPlateauWidth() {
         return plateau.getWidth();
     }
 
+    /**
+     * Plateau height
+     *
+     * @return plateau height
+     */
     public int getPlateauHeight() {
         return plateau.getHeight();
     }

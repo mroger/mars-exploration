@@ -7,6 +7,12 @@ final class Position {
     private final int x;
     private final int y;
 
+    /**
+     * Construct a position object
+     *
+     * @param x x-coordinate of the position
+     * @param y y-coordinate of the position
+     */
     Position(final int x, final int y) {
         if (x < 0) {
             throw new IllegalArgumentException("X coordinate should not be a negative number");
@@ -36,10 +42,20 @@ final class Position {
         return Objects.hash(x, y);
     }
 
+    /**
+     * The x-coordinate of the position
+     *
+     * @return the x-coordinate of the position
+     */
     int getX() {
         return x;
     }
 
+    /**
+     * The y-coordinate of the position
+     *
+     * @return the y-coordinate of the position
+     */
     int getY() {
         return y;
     }

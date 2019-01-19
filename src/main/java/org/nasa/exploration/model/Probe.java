@@ -10,6 +10,14 @@ final class Probe {
     private Direction direction;
     private final Plateau plateau;
 
+    /**
+     * Constructs a new probe
+     *
+     * @param id id of the probe
+     * @param position position of the probe
+     * @param direction the facing direction of the probe
+     * @param plateau the plateau to which the probe position must conform
+     */
     Probe(final UUID id, final Position position, final Direction direction, final Plateau plateau) {
         validateNonNullableParameters(id, position, direction, plateau);
 
@@ -21,26 +29,50 @@ final class Probe {
         validatePosition(position);
     }
 
+    /**
+     * The probe id as string
+     *
+     * @return the probe id as string
+     */
     String getId() {
         return id.toString();
     }
 
+    /**
+     * The probe position
+     *
+     * @return the probe position
+     */
     Position getPosition() {
         return position;
     }
 
+    /**
+     * The probe direction
+     *
+     * @return the probe direction
+     */
     Direction getDirection() {
         return direction;
     }
 
+    /**
+     * Rotates the probe to left
+     */
     void rotateLeft() {
         this.direction = direction.rotateLeft();
     }
 
+    /**
+     * Rotates the probe to the right
+     */
     void rotateRight() {
         this.direction = direction.rotateRight();
     }
 
+    /**
+     * Move the probe one step to the direction it's facing
+     */
     void moveOneStep() {
         Position newPosition = direction.calculateNextPosition(position.getX(), position.getY());
         if (!plateau.contains(newPosition)) {
@@ -70,10 +102,20 @@ final class Probe {
         }
     }
 
+    /**
+     * Returns the x-coordinate of the probe position
+     *
+     * @return the x-coordinate of the probe position
+     */
     int getXPosition() {
         return position.getX();
     }
 
+    /**
+     * Returns the y-coordinate of the probe position
+     *
+     * @return the y-coordinate of the probe position
+     */
     int getYPosition() {
         return position.getY();
     }

@@ -10,6 +10,9 @@ public class ProbeAggregate {
         this.probe = new Probe(builder.id, builder.position, builder.direction, builder.plateau);
     }
 
+    /**
+     * Builds an ProbeAggregate
+     */
     public static class ProbeAggregateBuilder {
 
         private UUID id;
@@ -38,32 +41,62 @@ public class ProbeAggregate {
         public ProbeAggregate build() {
             return new ProbeAggregate(this);
         }
-
-
-
     }
+
+    /**
+     * Returns the probe id
+     *
+     * @return the probe id
+     */
     public String getId() {
         return probe.getId();
     }
+
+    /**
+     * Returns the x-coordinate of the probe position
+     *
+     * @return the x-coordinate of the probe position
+     */
     public int getXPosition() {
         return probe.getXPosition();
     }
+
+    /**
+     * Returns the y-coordinate of the probe position
+     *
+     * @return the y-coordinate of the probe position
+     */
     public int getYPosition() {
         return probe.getYPosition();
     }
 
+    /**
+     * Returns the direction of the probe as one of the characters:
+     * N, S, E or W
+     *
+     * @return the direction of the probe as one character
+     */
     public String getDirection() {
         return probe.getDirection().toString();
     }
 
+    /**
+     * Rotates the probe left
+     */
     public void rotateLeft() {
         this.probe.rotateLeft();
     }
 
+    /**
+     * Rotates the probe right
+     */
     public void rotateRight() {
         this.probe.rotateRight();
     }
 
+    /**
+     * Moves the probe one step to its facing direction
+     */
     public void move() {
         this.probe.moveOneStep();
     }
