@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 	
     <modules>
-        <module>model</module>
+        <module>mars-exploration-model</module>
     </modules>
 
 </project>
