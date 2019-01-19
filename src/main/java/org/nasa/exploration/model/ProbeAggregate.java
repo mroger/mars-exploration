@@ -11,20 +11,20 @@ public class ProbeAggregate {
     }
 
     public static class ProbeAggregateBuilder {
+
         private UUID id;
+
         private Plateau plateau;
+
         private Direction direction;
         private Position position;
-
-        public ProbeAggregateBuilder(final Plateau plateau) {
+        ProbeAggregateBuilder(final Plateau plateau) {
             this.plateau = plateau;
         }
-
         public ProbeAggregateBuilder id(UUID id) {
             this.id = id;
             return this;
         }
-
         public ProbeAggregateBuilder direction(Direction direction) {
             this.direction = direction;
             return this;
@@ -38,21 +38,33 @@ public class ProbeAggregate {
         public ProbeAggregate build() {
             return new ProbeAggregate(this);
         }
-    }
 
+
+
+    }
     public String getId() {
         return probe.getId();
     }
-
     public int getXPosition() {
         return probe.getXPosition();
     }
-
     public int getYPosition() {
         return probe.getYPosition();
     }
 
     public String getDirection() {
         return probe.getDirection().toString();
+    }
+
+    public void rotateLeft() {
+        this.probe.rotateLeft();
+    }
+
+    public void rotateRight() {
+        this.probe.rotateRight();
+    }
+
+    public void move() {
+        this.probe.moveOneStep();
     }
 }
