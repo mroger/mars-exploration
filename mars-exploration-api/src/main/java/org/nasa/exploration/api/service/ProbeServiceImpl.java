@@ -7,11 +7,11 @@ import org.nasa.exploration.model.ProbeAggregate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MarsExplorationServiceImpl implements MarsExplorationService {
+public class ProbeServiceImpl implements ProbeService {
 
     private MissionControl missionControl;
 
-    public MarsExplorationServiceImpl(MissionControl missionControl) {
+    public ProbeServiceImpl(MissionControl missionControl) {
         this.missionControl = missionControl;
     }
 
