@@ -3,6 +3,7 @@ package org.nasa.exploration.integration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,15 @@ class MissionControlTest {
             assertThat(missionControl.getPlateauWidth()).isEqualTo(10);
             assertThat(missionControl.getPlateauHeight()).isEqualTo(20);
         }
+
+        @Test
+        void shouldGetAllProbeAggregates() {
+            MissionControl missionControl = new MissionControl(10, 20);
+
+            List<ProbeAggregate> probeAggregates = missionControl.getRegisteredProbeAggregates();
+
+            assertThat(probeAggregates.size()).isEqualTo(0);
+        }
     }
 
     @Nested
@@ -60,6 +70,17 @@ class MissionControlTest {
             assertThat(probeAggregate.getXPosition()).isEqualTo(5);
             assertThat(probeAggregate.getYPosition()).isEqualTo(3);
             assertThat(probeAggregate.getDirection()).isEqualTo("E");
+        }
+
+        @Test
+        void shouldGetAllProbeAggregates() {
+            missionControl.createProbe(5, 3, "E");
+            missionControl.createProbe(3, 5, "W");
+            missionControl.createProbe(8, 5, "N");
+
+            List<ProbeAggregate> probeAggregates = missionControl.getRegisteredProbeAggregates();
+
+            assertThat(probeAggregates.size()).isEqualTo(3);
         }
 
         @Test

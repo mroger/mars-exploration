@@ -2,6 +2,9 @@ package org.nasa.exploration.model;
 
 import org.nasa.exploration.model.exception.PositionAlreadyTakenException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -113,5 +116,9 @@ public class MissionControl {
         if (probe != null) {
             throw new PositionAlreadyTakenException("Position already taken by probe [" + probe.getId() + "]");
         }
+    }
+
+    public List<ProbeAggregate> getRegisteredProbeAggregates() {
+        return new ArrayList<>(probesByUUID.values());
     }
 }
