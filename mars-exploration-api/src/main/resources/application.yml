@@ -1,0 +1,23 @@
+server:
+  port: 9890
+  servlet:
+      context-path: /mars-exploration
+
+spring:
+  application:
+    name: nasa-exploration
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    default-property-inclusion: non_null
+
+missioncontrol:
+  plateau:
+    width: 20
+    height: 20
+
+log:
+  level: DEBUG
