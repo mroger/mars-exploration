@@ -65,21 +65,6 @@ public class ProbeServiceImpl implements ProbeService {
         Instruction instructionImpl = InstructionFactory.makeInstruction(probeAggregateGet, instruction);
         instructionImpl.execute();
 
-        /*switch (instruction) {
-            case "M": {
-                probeAggregateGet.move();
-                break;
-            }
-            case "R": {
-                probeAggregateGet.rotateRight();
-                break;
-            }
-            case "L": {
-                probeAggregateGet.rotateLeft();
-                break;
-            }
-        }*/
-
         return ProbeResponse.fromModel(probeAggregate.get());
     }
 }
