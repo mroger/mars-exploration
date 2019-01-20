@@ -42,4 +42,44 @@ public class ProbeServiceImpl implements ProbeService {
         }
         return ProbeResponse.fromModel(probeAggregate.get());
     }
+
+    @Override
+    public ProbeResponse findProbeByPosition(int x, int y) {
+        final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateByPosition(x, y);
+        if (!probeAggregate.isPresent()) {
+            return new ProbeResponse();
+        }
+        return ProbeResponse.fromModel(probeAggregate.get());
+    }
+
+    @Override
+    public ProbeResponse processInstruction(String id, String instruction) {
+        final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
+        if (!probeAggregate.isPresent()) {
+            return new ProbeResponse();
+        }
+        ProbeAggregate probeAggregateGet = probeAggregate.get();
+
+        ProbeResponse response = new ProbeResponse();
+        ProbeCommand command = ProbeCommand.instance(probeAggregateGet);
+        switch (instruction) {
+            case "M": {
+                probeAggregateGet.move();
+                response = ProbeResponse.fromModel(probeAggregateGet);
+                break;
+            }
+            case "R": {
+                probeAggregateGet.rotateRight();
+                response = ProbeResponse.fromModel(probeAggregateGet);
+                break;
+            }
+            case "L": {
+                probeAggregateGet.rotateLeft();
+                response = ProbeResponse.fromModel(probeAggregateGet);
+                break;
+            }
+        }
+
+        return ProbeResponse.fromModel(probeAggregate.get());
+    }
 }

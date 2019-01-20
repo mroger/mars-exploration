@@ -12,4 +12,8 @@ public interface ProbeService {
     List<ProbeResponse> findAllProbes();
 
     ProbeResponse findProbeById(String id);
+
+    ProbeResponse findProbeByPosition(int x, int y);
+
+    ProbeResponse processInstruction(String id, String instruction);
 }
