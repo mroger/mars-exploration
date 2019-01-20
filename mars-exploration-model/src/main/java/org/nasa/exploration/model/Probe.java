@@ -26,7 +26,7 @@ final class Probe {
         this.direction = direction;
         this.plateau = plateau;
 
-        validatePosition(position);
+        validatePosition(position, "Trying to put the probe out of bounds");
     }
 
     /**
@@ -75,9 +75,7 @@ final class Probe {
      */
     void moveOneStep() {
         Position newPosition = direction.calculateNextPosition(position.getX(), position.getY());
-        if (!plateau.contains(newPosition)) {
-            throw new PositionOutOfBoundsException("New position is out of bounds");
-        }
+        validatePosition(newPosition, "New position is out of bounds");
         this.position = newPosition;
     }
 
@@ -96,9 +94,9 @@ final class Probe {
         }
     }
 
-    private void validatePosition(Position position) {
+    private void validatePosition(Position position, String message) {
         if (!plateau.contains(position)) {
-            throw new PositionOutOfBoundsException("New position is out of bounds");
+            throw new PositionOutOfBoundsException(message);
         }
     }
 

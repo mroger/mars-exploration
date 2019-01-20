@@ -52,7 +52,7 @@ class ProbeAggregateTest {
                     .build()
             );
 
-            assertEquals("New position is out of bounds", exception.getMessage());
+            assertEquals("Trying to put the probe out of bounds", exception.getMessage());
         }
 
         @Test

@@ -76,7 +76,7 @@ class ProbeTest {
                 PositionOutOfBoundsException.class, () -> new Probe(ANY_ID, position, EAST, plateau)
             );
 
-            assertEquals("New position is out of bounds", exception.getMessage());
+            assertEquals("Trying to put the probe out of bounds", exception.getMessage());
         }
 
         @Test
