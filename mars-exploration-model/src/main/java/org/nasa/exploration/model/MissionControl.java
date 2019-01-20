@@ -121,4 +121,8 @@ public class MissionControl {
     public List<ProbeAggregate> getRegisteredProbeAggregates() {
         return new ArrayList<>(probesByUUID.values());
     }
+
+    public Optional<ProbeAggregate> getProbeAggregateByPosition(int x, int y) {
+        return Optional.ofNullable(probesByPosition.get(new Position(x, y)));
+    }
 }
