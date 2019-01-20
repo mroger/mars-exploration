@@ -48,6 +48,11 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return createErrorResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Object> uncaughtException(final Exception ex) {
+        return createErrorResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     private ErrorResponse createErrorResponse(HttpStatus status, String message) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setStatus(status.value());

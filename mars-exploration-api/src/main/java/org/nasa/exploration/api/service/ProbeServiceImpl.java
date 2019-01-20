@@ -8,6 +8,7 @@ import org.nasa.exploration.model.ProbeAggregate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,5 +32,14 @@ public class ProbeServiceImpl implements ProbeService {
         return missionControl.getRegisteredProbeAggregates().stream()
             .map(ProbeResponse::fromModel)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProbeResponse findProbeById(String id) {
+        final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
+        if (!probeAggregate.isPresent()) {
+            return new ProbeResponse();
+        }
+        return ProbeResponse.fromModel(probeAggregate.get());
     }
 }

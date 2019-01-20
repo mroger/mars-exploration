@@ -10,4 +10,6 @@ public interface ProbeService {
     ProbeCreationResponse createProbe(ProbeCreationRequest request);
 
     List<ProbeResponse> findAllProbes();
+
+    ProbeResponse findProbeById(String id);
 }
