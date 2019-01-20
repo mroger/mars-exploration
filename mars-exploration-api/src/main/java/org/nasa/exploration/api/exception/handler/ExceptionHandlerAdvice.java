@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Date;
+
 @RestControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
@@ -55,6 +57,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     private ErrorResponse createErrorResponse(HttpStatus status, String message) {
         ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setTimestamp(new Date());
         errorResponse.setStatus(status.value());
         errorResponse.setError(status.getReasonPhrase());
         errorResponse.setMessage(message);
