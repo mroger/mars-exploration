@@ -3,6 +3,8 @@ package org.nasa.exploration.api.service;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
 import org.nasa.exploration.api.model.ProbeCreationResponse;
 import org.nasa.exploration.api.model.ProbeResponse;
+import org.nasa.exploration.api.service.instruction.Instruction;
+import org.nasa.exploration.api.service.instruction.InstructionFactory;
 import org.nasa.exploration.model.MissionControl;
 import org.nasa.exploration.model.ProbeAggregate;
 import org.springframework.stereotype.Service;
@@ -60,25 +62,23 @@ public class ProbeServiceImpl implements ProbeService {
         }
         ProbeAggregate probeAggregateGet = probeAggregate.get();
 
-        ProbeResponse response = new ProbeResponse();
-        ProbeCommand command = ProbeCommand.instance(probeAggregateGet);
-        switch (instruction) {
+        Instruction instructionImpl = InstructionFactory.makeInstruction(probeAggregateGet, instruction);
+        instructionImpl.execute();
+
+        /*switch (instruction) {
             case "M": {
                 probeAggregateGet.move();
-                response = ProbeResponse.fromModel(probeAggregateGet);
                 break;
             }
             case "R": {
                 probeAggregateGet.rotateRight();
-                response = ProbeResponse.fromModel(probeAggregateGet);
                 break;
             }
             case "L": {
                 probeAggregateGet.rotateLeft();
-                response = ProbeResponse.fromModel(probeAggregateGet);
                 break;
             }
-        }
+        }*/
 
         return ProbeResponse.fromModel(probeAggregate.get());
     }
