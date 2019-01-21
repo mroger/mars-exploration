@@ -1,5 +1,7 @@
 package org.nasa.exploration.api.service;
 
+import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
+import org.nasa.exploration.api.exception.ProbeNotFoundByPositionException;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
 import org.nasa.exploration.api.model.ProbeCreationResponse;
 import org.nasa.exploration.api.model.ProbeResponse;
@@ -40,7 +42,7 @@ public class ProbeServiceImpl implements ProbeService {
     public ProbeResponse findProbeById(String id) {
         final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
         if (!probeAggregate.isPresent()) {
-            return new ProbeResponse();
+            throw new ProbeNotFoundByIdException(id);
         }
         return ProbeResponse.fromModel(probeAggregate.get());
     }
@@ -49,7 +51,7 @@ public class ProbeServiceImpl implements ProbeService {
     public ProbeResponse findProbeByPosition(int x, int y) {
         final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateByPosition(x, y);
         if (!probeAggregate.isPresent()) {
-            return new ProbeResponse();
+            throw new ProbeNotFoundByPositionException(x, y);
         }
         return ProbeResponse.fromModel(probeAggregate.get());
     }
@@ -58,7 +60,7 @@ public class ProbeServiceImpl implements ProbeService {
     public ProbeResponse processInstruction(String id, String instruction) {
         final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
         if (!probeAggregate.isPresent()) {
-            return new ProbeResponse();
+            throw new ProbeNotFoundByIdException(id);
         }
         ProbeAggregate probeAggregateGet = probeAggregate.get();
 
