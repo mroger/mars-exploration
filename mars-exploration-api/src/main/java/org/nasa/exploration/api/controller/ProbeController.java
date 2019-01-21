@@ -3,6 +3,7 @@ package org.nasa.exploration.api.controller;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
 import org.nasa.exploration.api.model.ProbeCreationResponse;
 import org.nasa.exploration.api.model.ProbeInstructionRequest;
+import org.nasa.exploration.api.model.ProbeListResponse;
 import org.nasa.exploration.api.model.ProbeResponse;
 import org.nasa.exploration.api.service.ProbeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,9 @@ public class ProbeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProbeResponse>> findAll() {
+    public ResponseEntity<ProbeListResponse> findAll() {
         final List<ProbeResponse> probes =  probeService.findAllProbes();
-        return ResponseEntity.ok(probes);
+        return ResponseEntity.ok(new ProbeListResponse(probes));
     }
 
     @GetMapping("/{probeId}")
