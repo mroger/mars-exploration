@@ -83,7 +83,7 @@ final class Probe {
     void moveOneStep() {
         Position newPosition = direction.calculateNextPosition(position.getX(), position.getY());
 
-        LOGGER.error("New probe position: ({},{})", newPosition.getX(), newPosition.getY());
+        LOGGER.info("New probe position: ({},{})", newPosition.getX(), newPosition.getY());
         validatePosition(newPosition, "New position is out of bounds");
         this.position = newPosition;
     }
