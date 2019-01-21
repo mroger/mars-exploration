@@ -2,8 +2,12 @@ package org.nasa.exploration.model;
 
 import java.util.UUID;
 import org.nasa.exploration.model.exception.PositionOutOfBoundsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class Probe {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Probe.class);
 
     private final UUID id;
     private Position position;
@@ -19,6 +23,9 @@ final class Probe {
      * @param plateau the plateau to which the probe position must conform
      */
     Probe(final UUID id, final Position position, final Direction direction, final Plateau plateau) {
+        LOGGER.info("Creating probe id=[{}] at ({},{}) and facing {}", id.toString(), position.getX(),
+            position.getY(), direction);
+
         validateNonNullableParameters(id, position, direction, plateau);
 
         this.id = id;
@@ -75,27 +82,34 @@ final class Probe {
      */
     void moveOneStep() {
         Position newPosition = direction.calculateNextPosition(position.getX(), position.getY());
+
+        LOGGER.error("New probe position: ({},{})", newPosition.getX(), newPosition.getY());
         validatePosition(newPosition, "New position is out of bounds");
         this.position = newPosition;
     }
 
     private void validateNonNullableParameters(UUID id, Position position, Direction direction, Plateau plateau) {
         if (id == null) {
+            LOGGER.error("Trying to create probe with null id");
             throw new IllegalArgumentException("Id should not be null");
         }
         if (position == null) {
+            LOGGER.error("Trying to create probe with null position");
             throw new IllegalArgumentException("Position should not be null");
         }
         if (direction == null) {
+            LOGGER.error("Trying to create probe with null direction");
             throw new IllegalArgumentException("Direction should not be null");
         }
         if (plateau == null) {
+            LOGGER.error("Trying to create probe with null plateau");
             throw new IllegalArgumentException("Plateau should not be null");
         }
     }
 
     private void validatePosition(Position position, String message) {
         if (!plateau.contains(position)) {
+            LOGGER.error("Trying to put probe outside plateau area");
             throw new PositionOutOfBoundsException(message);
         }
     }

@@ -1,8 +1,13 @@
 package org.nasa.exploration.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Objects;
 
 final class Position {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
 
     private final int x;
     private final int y;
@@ -15,9 +20,11 @@ final class Position {
      */
     Position(final int x, final int y) {
         if (x < 0) {
+            LOGGER.error("Trying to build a position with negative x coordinate: {}", x);
             throw new IllegalArgumentException("X coordinate should not be a negative number");
         }
         if (y < 0) {
+            LOGGER.error("Trying to build a position with negative y coordinate: {}", y);
             throw new IllegalArgumentException("Y coordinate should not be a negative number");
         }
         this.x = x;

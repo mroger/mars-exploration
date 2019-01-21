@@ -1,8 +1,13 @@
 package org.nasa.exploration.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Objects;
 
 final class Plateau {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
 
     private final int width;
     private final int height;
@@ -14,10 +19,14 @@ final class Plateau {
      * @param height plateau height
      */
     Plateau(final int width, final int height) {
+        LOGGER.info("Creating a plateau with width = {} and height = {}", width, height);
+
         if (width < 0) {
+            LOGGER.error("Trying to create a plateau with negative width: {}", width);
             throw new IllegalArgumentException("Plateau width should not be a negative number");
         }
         if (height < 0) {
+            LOGGER.error("Trying to create a plateau with negative height: {}", height);
             throw new IllegalArgumentException("Plateau height should not be a negative number");
         }
 

@@ -1,8 +1,13 @@
 package org.nasa.exploration.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.UUID;
 
 public class ProbeAggregate {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProbeAggregate.class);
 
     private Probe probe;
 
@@ -84,6 +89,7 @@ public class ProbeAggregate {
      * Rotates the probe left
      */
     public void rotateLeft() {
+        LOGGER.info("Rotating probe left");
         this.probe.rotateLeft();
     }
 
@@ -91,6 +97,7 @@ public class ProbeAggregate {
      * Rotates the probe right
      */
     public void rotateRight() {
+        LOGGER.info("Rotating probe right");
         this.probe.rotateRight();
     }
 
@@ -98,6 +105,7 @@ public class ProbeAggregate {
      * Moves the probe one step to its facing direction
      */
     public void move() {
+        LOGGER.info("Moving probe");
         this.probe.moveOneStep();
     }
 }
