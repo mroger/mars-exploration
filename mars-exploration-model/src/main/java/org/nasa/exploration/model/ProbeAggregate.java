@@ -27,22 +27,24 @@ public class ProbeAggregate {
         private Direction direction;
 
         private Position position;
-        ProbeAggregateBuilder(final Plateau plateau) {
+        public ProbeAggregateBuilder(final Plateau plateau) {
             this.plateau = plateau;
+        }
+        public ProbeAggregateBuilder(final int width, final int height) {
+            this.plateau = new Plateau(width, height);
         }
         public ProbeAggregateBuilder id(UUID id) {
             this.id = id;
             return this;
         }
-        public ProbeAggregateBuilder direction(Direction direction) {
-            this.direction = direction;
+        public ProbeAggregateBuilder direction(String direction) {
+            this.direction = Direction.valueOf(direction);
             return this;
         }
-        public ProbeAggregateBuilder position(Position position) {
-            this.position = position;
+        public ProbeAggregateBuilder position(final int x, final int y) {
+            this.position = new Position(x, y);
             return this;
         }
-
         public ProbeAggregate build() {
             return new ProbeAggregate(this);
         }

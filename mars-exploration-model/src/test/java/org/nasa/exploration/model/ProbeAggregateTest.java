@@ -22,7 +22,7 @@ class ProbeAggregateTest {
         UUID id = UUID.randomUUID();
         aggregateBuilder = new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
             .id(id)
-            .position(new Position(10, 15));
+            .position(10, 15);
     }
 
     @Nested
@@ -32,8 +32,8 @@ class ProbeAggregateTest {
             UUID id = UUID.randomUUID();
             final ProbeAggregate probeAggregate = new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
                 .id(id)
-                .position(new Position(10, 15))
-                .direction(Direction.S)
+                .position(10, 15)
+                .direction("S")
                 .build();
 
             assertThat(probeAggregate.getId()).isEqualTo(id.toString());
@@ -47,8 +47,8 @@ class ProbeAggregateTest {
             Throwable exception = assertThrows(
                 PositionOutOfBoundsException.class, () -> new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
                     .id(UUID.randomUUID())
-                    .position(new Position(25, 35))
-                    .direction(Direction.S)
+                    .position(25, 35)
+                    .direction("S")
                     .build()
             );
 
@@ -60,8 +60,8 @@ class ProbeAggregateTest {
             Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> new ProbeAggregate.ProbeAggregateBuilder(null)
                     .id(UUID.randomUUID())
-                    .position(new Position(10, 15))
-                    .direction(Direction.S)
+                    .position(10, 15)
+                    .direction("S")
                     .build()
             );
 
@@ -72,8 +72,8 @@ class ProbeAggregateTest {
         void shouldThrowException_whenMissingIdParameter() {
             Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
-                    .position(new Position(10, 15))
-                    .direction(Direction.S)
+                    .position(10, 15)
+                    .direction("S")
                     .build()
             );
 
@@ -85,7 +85,7 @@ class ProbeAggregateTest {
             Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
                     .id(UUID.randomUUID())
-                    .direction(Direction.S)
+                    .direction("S")
                     .build()
             );
 
@@ -97,7 +97,7 @@ class ProbeAggregateTest {
             Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> new ProbeAggregate.ProbeAggregateBuilder(PLATEAU)
                     .id(UUID.randomUUID())
-                    .position(new Position(10, 15))
+                    .position(10, 15)
                     .build()
             );
 
@@ -110,7 +110,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeLeft_whenFacingNorth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.N)
+                .direction("N")
                 .build();
             probeAggregate.rotateLeft();
 
@@ -120,7 +120,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeLeft_whenFacingEast() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.E)
+                .direction("E")
                 .build();
             probeAggregate.rotateLeft();
 
@@ -130,7 +130,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeLeft_whenFacingSouth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.S)
+                .direction("S")
                 .build();
             probeAggregate.rotateLeft();
 
@@ -140,7 +140,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeLeft_whenFacingWest() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.W)
+                .direction("W")
                 .build();
             probeAggregate.rotateLeft();
 
@@ -150,7 +150,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeRight_whenFacingNorth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.N)
+                .direction("N")
                 .build();
             probeAggregate.rotateRight();
 
@@ -160,7 +160,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeRight_whenFacingEast() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.E)
+                .direction("E")
                 .build();
             probeAggregate.rotateRight();
 
@@ -170,7 +170,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeRight_whenFacingSouth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.S)
+                .direction("S")
                 .build();
             probeAggregate.rotateRight();
 
@@ -180,7 +180,7 @@ class ProbeAggregateTest {
         @Test
         void shouldRotateProbeRight_whenFacingWest() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.W)
+                .direction("W")
                 .build();
             probeAggregate.rotateRight();
 
@@ -193,7 +193,7 @@ class ProbeAggregateTest {
         @Test
         void shouldMoveProve_whenFacingNorth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.N)
+                .direction("N")
                 .build();
             probeAggregate.move();
 
@@ -204,7 +204,7 @@ class ProbeAggregateTest {
         @Test
         void shouldMoveProve_whenFacingEast() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.E)
+                .direction("E")
                 .build();
             probeAggregate.move();
 
@@ -215,7 +215,7 @@ class ProbeAggregateTest {
         @Test
         void shouldMoveProve_whenFacingSouth() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.S)
+                .direction("S")
                 .build();
             probeAggregate.move();
 
@@ -226,7 +226,7 @@ class ProbeAggregateTest {
         @Test
         void shouldMoveProve_whenFacingWest() {
             final ProbeAggregate probeAggregate = aggregateBuilder
-                .direction(Direction.W)
+                .direction("W")
                 .build();
             probeAggregate.move();
 
@@ -240,12 +240,12 @@ class ProbeAggregateTest {
             final ProbeAggregate probeAggregate = new ProbeAggregate
                 .ProbeAggregateBuilder(new Plateau(20, 30))
                 .id(id)
-                .position(new Position(10, 30))
-                .direction(Direction.N)
+                .position(10, 30)
+                .direction("N")
                 .build();
 
             Throwable exception = assertThrows(
-                PositionOutOfBoundsException.class, () -> probeAggregate.move()
+                PositionOutOfBoundsException.class, probeAggregate::move
             );
 
             assertEquals("New position is out of bounds", exception.getMessage());

@@ -20,7 +20,8 @@ public class MissionControl {
 
     private final Map<UUID, ProbeAggregate> probesByUUID;
     private final Map<Position, ProbeAggregate> probesByPosition;
-    private final Plateau plateau;
+    private final int plateauWidth;
+    private final int plateauHeight;
 
     /**
      * Mission control class that holds probes created and put over a plateau
@@ -37,7 +38,8 @@ public class MissionControl {
             LOGGER.error("Trying to create a plateau with negative height: {}", height);
             throw new IllegalArgumentException("Plateau height should not be a negative number");
         }
-        plateau = new Plateau(width, height);
+        plateauWidth = width;
+        plateauHeight = height;
         probesByUUID = new ConcurrentHashMap<>();
         probesByPosition = new ConcurrentHashMap<>();
 
@@ -62,10 +64,10 @@ public class MissionControl {
 
         validateNewProbePosition(position);
 
-        ProbeAggregate probeAggregate = new ProbeAggregate.ProbeAggregateBuilder(plateau)
+        ProbeAggregate probeAggregate = new ProbeAggregate.ProbeAggregateBuilder(plateauWidth, plateauHeight)
             .id(id)
-            .position(position)
-            .direction(Direction.valueOf(facingDirection))
+            .position(x, y)
+            .direction(facingDirection)
             .build();
 
         probesByUUID.put(id, probeAggregate);
@@ -95,7 +97,7 @@ public class MissionControl {
      * @return plateau width
      */
     public int getPlateauWidth() {
-        return plateau.getWidth();
+        return plateauWidth;
     }
 
     /**
@@ -104,7 +106,7 @@ public class MissionControl {
      * @return plateau height
      */
     public int getPlateauHeight() {
-        return plateau.getHeight();
+        return plateauHeight;
     }
 
     /**
