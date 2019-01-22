@@ -1,5 +1,10 @@
 # Explorando Marte
 
+## Decisões de design
+Utilizando o conceito de aggregates, foram criadas as classes do módulo mars-exploration-model.
+A classe MissionControl foi criada nesse módulo, mas como possui visibilidade pública e pode
+representar um repositório de sondas, poderia ser movida para o módulo mars-exploration-api. 
+
 ## Construindo executando a aplicação
 
 ### Construindo a aplicação
@@ -18,103 +23,18 @@ Para redefinir esta área na execução da aplicação, pode-se fazer, por exemp
 `$ mvn clean spring-boot:run -Dmissioncontrol.plateau.width=30 -Dmissioncontrol.plateau.height=30`
 
 ## API para criação e controle das sondas
+A API foi documentada usando-se Swagger e pode-se experimentá-la com a aplicação em execução e acessando-se o endereço
 
-### Criação das sondas
+`http://localhost:9890/mars-exploration/swagger-ui.html`
 
-`POST http://localhost:9890/mars-exploration/probes`
+### Operações
+As operações disponíveis para as sondas são:
+* Criar uma sonda - duas sondas não podem ocupar o mesmo lugar
+* Consultar todas as sondas
+* Localizar uma sonda pelo id
+* Localizar uma sonda por sua posição
+* Enviar instruções para movimentar uma sonda identificada pelo Id e rotacioná-la para a esquerda ou para a direita
 
-Request
-```json
-{
-  "x": 3,
-  "y": 3,
-  "direction": "E"
-}
-```
+Obs.: A operação de remover uma sonda não foi implementada porque não seria prático destruí-la uma vez que já estivesse em Marte.
+Uma solução seria criar a sonda com o seu tempo de vida configurado e fazer com que ela fosse desativada depois de passado esse tempo.
 
-Response
-```json
-{
-  "id": "b9ab0a9c-91eb-4575-8ab0-227edfe1385a",
-  "x": 3,
-  "y": 3,
-  "direction": "E"
-}
-```
-
-### Consulta de todas as sondas
-
-`GET http://localhost:9890/mars-exploration/probes`
-
-Response
-```json
-[
-  {
-    "id": "47161e8a-301f-4f9c-afeb-e6b7a44bd62e",
-    "x": 10,
-    "y": 10,
-    "direction": "W"
-  },
-  {
-    "id": "b9ab0a9c-91eb-4575-8ab0-227edfe1385a",
-    "x": 3,
-    "y": 0,
-    "direction": "S"
-  }
-]
-```
-
-### Consulta de sonda por id
-
-`GET http://localhost:9890/mars-exploration/probes/{probeId}`
-
-Exemplo:
-`GET http://localhost:9890/mars-exploration/probes/b9ab0a9c-91eb-4575-8ab0-227edfe1385a`
-
-Response
-```json
-{
-  "id": "b9ab0a9c-91eb-4575-8ab0-227edfe1385a",
-  "x": 3,
-  "y": 3,
-  "direction": "E"
-}
-```
-
-### Consulta de sonda por sua posição
-
-`GET http://localhost:9890/mars-exploration/probes/position?x=1&y=2`
-
-Response
-```json
-{
-  "id": "d4d64c3a-457f-425b-82e0-1f44cb909b67",
-  "x": 13,
-  "y": 2,
-  "direction": "S"
-}
-```
-
-### Sending instructions to control probes
-
-#### Moving the probe
-
-`PUT http://localhost:9890/mars-exploration/probes`
-
-Request
-```json
-{
-  "id": "b9ab0a9c-91eb-4575-8ab0-227edfe1385a",
-  "instruction": "M"
-}
-```
-
-Response
-```json
-{
-  "id": "d4d64c3a-457f-425b-82e0-1f44cb909b67",
-  "x": 13,
-  "y": 1,
-  "direction": "S"
-}
-```
