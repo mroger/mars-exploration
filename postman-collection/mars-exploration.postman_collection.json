@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "406d5af8-6157-4eed-ac35-bd870b55e5c6",
+		"_postman_id": "efcdec5a-7733-47dd-ba3b-a0564ec49485",
 		"name": "mars-exploration",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -46,7 +46,12 @@
 			"name": "http://localhost:9890/mars-exploration/probes",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -71,13 +76,18 @@
 			"name": "http://localhost:9890/mars-exploration/probes/a7226fef-47b1-4ba9-943c-a8d6c2714f67",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9890/mars-exploration/probes/a6af7867-b5c5-4e25-bfb3-e5ba2e14805d",
+					"raw": "http://localhost:9890/mars-exploration/probes/b2ec153c-debc-4529-a566-1c7c892d3058",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,7 +96,7 @@
 					"path": [
 						"mars-exploration",
 						"probes",
-						"a6af7867-b5c5-4e25-bfb3-e5ba2e14805d"
+						"b2ec153c-debc-4529-a566-1c7c892d3058"
 					]
 				},
 				"description": "Find probe by Id"
@@ -97,13 +107,18 @@
 			"name": "http://localhost:9890/mars-exploration/probes",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9890/mars-exploration/probes/findByPosition?x=5&y=15",
+					"raw": "http://localhost:9890/mars-exploration/probes/findByPosition?x=15&y=20",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -117,11 +132,11 @@
 					"query": [
 						{
 							"key": "x",
-							"value": "5"
+							"value": "15"
 						},
 						{
 							"key": "y",
-							"value": "15"
+							"value": "20"
 						}
 					]
 				},
@@ -136,14 +151,12 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"af865060-b557-4691-a4f7-b95032acd4ca\",\n\t\"instruction\": \"M\"\n}"
+					"raw": "{\n\t\"id\": \"362fba34-7e9f-4bf0-9ad8-d74c1aa6a24b\",\n\t\"instruction\": \"M\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:9890/mars-exploration/probes",

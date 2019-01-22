@@ -22,36 +22,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/probes")
-public class ProbeController {
+public class ProbeController implements IProbeController {
 
     @Autowired
     private ProbeService probeService;
 
-    @PostMapping
+    @Override
+    @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<ProbeCreationResponse> create(@RequestBody @Valid ProbeCreationRequest request) {
         final ProbeCreationResponse createdProbe = probeService.createProbe(request);
         return ResponseEntity.ok(createdProbe);
     }
 
-    @GetMapping
+    @Override
+    @GetMapping(produces = "application/json")
     public ResponseEntity<ProbeListResponse> findAll() {
         final List<ProbeResponse> probes =  probeService.findAllProbes();
         return ResponseEntity.ok(new ProbeListResponse(probes));
     }
 
-    @GetMapping("/{probeId}")
+    @Override
+    @GetMapping(value = "/{probeId}", produces = "application/json")
     public ResponseEntity<ProbeResponse> findById(@PathVariable final String probeId) {
         final ProbeResponse probe =  probeService.findProbeById(probeId);
         return ResponseEntity.ok(probe);
     }
 
-    @GetMapping("/findByPosition")
+    @Override
+    @GetMapping(value = "/findByPosition", produces = "application/json")
     public ResponseEntity<ProbeResponse> findByPosition(@RequestParam int x, @RequestParam int y) {
         final ProbeResponse probe =  probeService.findProbeByPosition(x, y);
         return ResponseEntity.ok(probe);
     }
 
-    @PutMapping
+    @Override
+    @PutMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<ProbeResponse> processInstruction(@RequestBody @Valid ProbeInstructionRequest request) {
         final ProbeResponse probe =  probeService.processInstruction(request.getId(), request.getInstruction());
         return ResponseEntity.ok(probe);
