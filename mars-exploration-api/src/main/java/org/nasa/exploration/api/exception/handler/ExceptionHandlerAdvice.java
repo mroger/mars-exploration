@@ -1,5 +1,6 @@
 package org.nasa.exploration.api.exception.handler;
 
+import org.nasa.exploration.api.exception.ProbeCollisionException;
 import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
 import org.nasa.exploration.api.exception.ProbeNotFoundByPositionException;
 import org.nasa.exploration.model.exception.PositionAlreadyTakenException;
@@ -79,6 +80,11 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ProbeNotFoundByPositionException.class)
     public final ResponseEntity<Object> probeNotFoundByPosition(final ProbeNotFoundByPositionException ex, Locale locale) {
         return createErrorResponseEntity(HttpStatus.NOT_FOUND, null, ex.getMessage(), locale, ex.getX(), ex.getY());
+    }
+
+    @ExceptionHandler(ProbeCollisionException.class)
+    public final ResponseEntity<Object> probeCollision(final ProbeCollisionException ex, Locale locale) {
+        return createErrorResponseEntity(HttpStatus.CONFLICT, null, ex.getMessage(), locale, ex.getProbeId());
     }
 
     @ExceptionHandler(Exception.class)

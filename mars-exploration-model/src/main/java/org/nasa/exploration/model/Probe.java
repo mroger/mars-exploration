@@ -131,4 +131,13 @@ final class Probe {
     int getYPosition() {
         return position.getY();
     }
+
+    /**
+     * Returns the new position for the probe when it moves
+     *
+     * @return the next position assumed by the probe
+     */
+    public Position calculateNextPosition() {
+        return this.direction.calculateNextPosition(position.getX(), position.getY());
+    }
 }

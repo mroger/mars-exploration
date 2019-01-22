@@ -117,6 +117,17 @@ public class MissionControl {
     }
 
     /**
+     * Checks if a move of a probe will cause its collision with an existing probe
+     *
+     * @param probeAggregate the probe that is being checked
+     * @return true if the movement of a probe will cause collision with another, false otherwise
+     */
+    public boolean probeMoveCausesCollision(ProbeAggregate probeAggregate) {
+        Position newPosition = probeAggregate.calculateNextPosition();
+        return this.probesByPosition.keySet().contains(newPosition);
+    }
+
+    /**
      * Searches and returns a probe by its position
      *
      * @param x x coordinate of the probe

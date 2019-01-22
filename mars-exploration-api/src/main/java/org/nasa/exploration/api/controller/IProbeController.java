@@ -63,6 +63,7 @@ public interface IProbeController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Created"),
         @ApiResponse(code = 400, message = "Bad request", response = ErrorResponse.class),
+        @ApiResponse(code = 409, message = "Probe collision", response = ErrorResponse.class),
         @ApiResponse(code = 415, message = "Invalid Media Type", response = ErrorResponse.class) })
     ResponseEntity<ProbeResponse> processInstruction(ProbeInstructionRequest request);
 }

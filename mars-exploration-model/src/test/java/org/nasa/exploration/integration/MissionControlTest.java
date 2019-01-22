@@ -156,4 +156,13 @@ class MissionControlTest {
             assertEquals("Probe id should not be null nor empty", exception.getMessage());
         }
     }
+
+    @Test
+    void shouldDetectCollision() {
+        MissionControl missionControl = new MissionControl(10, 10);
+        missionControl.createProbe(5, 8, "E");
+        ProbeAggregate probe = missionControl.createProbe(6, 8, "W");
+
+        assertThat(missionControl.probeMoveCausesCollision(probe)).isTrue();
+    }
 }

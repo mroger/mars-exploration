@@ -25,6 +25,7 @@ public class ProbeAggregate {
         private Plateau plateau;
 
         private Direction direction;
+
         private Position position;
         ProbeAggregateBuilder(final Plateau plateau) {
             this.plateau = plateau;
@@ -37,7 +38,6 @@ public class ProbeAggregate {
             this.direction = direction;
             return this;
         }
-
         public ProbeAggregateBuilder position(Position position) {
             this.position = position;
             return this;
@@ -46,8 +46,8 @@ public class ProbeAggregate {
         public ProbeAggregate build() {
             return new ProbeAggregate(this);
         }
-    }
 
+    }
     /**
      * Returns the probe id
      *
@@ -107,5 +107,14 @@ public class ProbeAggregate {
     public void move() {
         LOGGER.info("Moving probe");
         this.probe.moveOneStep();
+    }
+
+    /**
+     * Returns the new position for the probe when it moves
+     *
+     * @return the next position assumed by the probe
+     */
+    public Position calculateNextPosition() {
+        return this.probe.calculateNextPosition();
     }
 }

@@ -64,7 +64,7 @@ public class ProbeServiceImpl implements ProbeService {
         }
         ProbeAggregate probeAggregateGet = probeAggregate.get();
 
-        Instruction instructionImpl = InstructionFactory.makeInstruction(probeAggregateGet, instruction);
+        Instruction instructionImpl = InstructionFactory.makeInstruction(probeAggregateGet, instruction, missionControl);
         instructionImpl.execute();
 
         return ProbeResponse.fromModel(probeAggregate.get());
