@@ -23,10 +23,10 @@ final class Probe {
      * @param plateau the plateau to which the probe position must conform
      */
     Probe(final UUID id, final Position position, final Direction direction, final Plateau plateau) {
+        validateNonNullableParameters(id, position, direction, plateau);
+
         LOGGER.info("Creating probe id=[{}] at ({},{}) and facing {}", id.toString(), position.getX(),
             position.getY(), direction);
-
-        validateNonNullableParameters(id, position, direction, plateau);
 
         this.id = id;
         this.position = position;
