@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "406d5af8-6157-4eed-ac35-bd870b55e5c6",
+		"name": "mars-exploration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9890/mars-exploration/probes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Locale",
+						"value": "\"pt_BR\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"x\": 5,\n\t\"y\": 15,\n\t\"direction\": \"N\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9890/mars-exploration/probes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9890",
+					"path": [
+						"mars-exploration",
+						"probes"
+					]
+				},
+				"description": "Creates and position a probe"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9890/mars-exploration/probes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9890/mars-exploration/probes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9890",
+					"path": [
+						"mars-exploration",
+						"probes"
+					]
+				},
+				"description": "Find all probes"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9890/mars-exploration/probes/a7226fef-47b1-4ba9-943c-a8d6c2714f67",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9890/mars-exploration/probes/a6af7867-b5c5-4e25-bfb3-e5ba2e14805d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9890",
+					"path": [
+						"mars-exploration",
+						"probes",
+						"a6af7867-b5c5-4e25-bfb3-e5ba2e14805d"
+					]
+				},
+				"description": "Find probe by Id"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9890/mars-exploration/probes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9890/mars-exploration/probes/findByPosition?x=5&y=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9890",
+					"path": [
+						"mars-exploration",
+						"probes",
+						"findByPosition"
+					],
+					"query": [
+						{
+							"key": "x",
+							"value": "5"
+						},
+						{
+							"key": "y",
+							"value": "15"
+						}
+					]
+				},
+				"description": "Find probe by position"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9890/mars-exploration/probes",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"af865060-b557-4691-a4f7-b95032acd4ca\",\n\t\"instruction\": \"M\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9890/mars-exploration/probes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9890",
+					"path": [
+						"mars-exploration",
+						"probes"
+					]
+				},
+				"description": "Move or rotate probe"
+			},
+			"response": []
+		}
+	]
+}
