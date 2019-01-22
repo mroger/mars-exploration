@@ -45,7 +45,7 @@ public class ProbeController {
         return ResponseEntity.ok(probe);
     }
 
-    @GetMapping("/position")
+    @GetMapping("/findByPosition")
     public ResponseEntity<ProbeResponse> findByPosition(@RequestParam int x, @RequestParam int y) {
         final ProbeResponse probe =  probeService.findProbeByPosition(x, y);
         return ResponseEntity.ok(probe);
