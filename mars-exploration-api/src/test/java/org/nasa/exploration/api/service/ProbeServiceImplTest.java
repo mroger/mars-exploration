@@ -1,12 +1,5 @@
 package org.nasa.exploration.api.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,10 +7,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
-import org.nasa.exploration.api.model.ProbeCreationResponse;
-import org.nasa.exploration.api.model.ProbeResponse;
 import org.nasa.exploration.model.MissionControl;
 import org.nasa.exploration.model.ProbeAggregate;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ProbeServiceImplTest {
@@ -49,11 +48,11 @@ public class ProbeServiceImplTest {
 
         ProbeCreationRequest request = createRequest(5, 7, "W");
 
-        final ProbeCreationResponse probe = service.createProbe(request);
+        final ProbeAggregate probe = service.createProbe(request);
 
         assertThat(probe.getId()).isNotNull();
-        assertThat(probe.getX()).isEqualTo(5);
-        assertThat(probe.getY()).isEqualTo(7);
+        assertThat(probe.getXPosition()).isEqualTo(5);
+        assertThat(probe.getYPosition()).isEqualTo(7);
         assertThat(probe.getDirection()).isEqualTo("W");
     }
 
@@ -73,9 +72,10 @@ public class ProbeServiceImplTest {
         when(missionControl.getProbeAggregateById(PROBE_ID)).thenReturn(
             createOptionalProbeAggregate(5, 7, "W"));
 
-        final ProbeResponse response = service.processInstruction(PROBE_ID, INSTRUCTION_L);
+        final Optional<ProbeAggregate> probeAggregate = service.processInstruction(PROBE_ID, INSTRUCTION_L);
 
-        assertThat(response.getDirection()).isEqualTo(DIRECTION_S);
+        assertThat(probeAggregate).isPresent();
+        assertThat(probeAggregate.get().getDirection()).isEqualTo(DIRECTION_S);
     }
 
     @Test
@@ -83,9 +83,10 @@ public class ProbeServiceImplTest {
         when(missionControl.getProbeAggregateById(PROBE_ID)).thenReturn(
             createOptionalProbeAggregate(5, 7, "W"));
 
-        final ProbeResponse response = service.processInstruction(PROBE_ID, INSTRUCTION_R);
+        final Optional<ProbeAggregate> probeAggregate = service.processInstruction(PROBE_ID, INSTRUCTION_R);
 
-        assertThat(response.getDirection()).isEqualTo(DIRECTION_N);
+        assertThat(probeAggregate).isPresent();
+        assertThat(probeAggregate.get().getDirection()).isEqualTo(DIRECTION_N);
     }
 
     @Test
@@ -93,11 +94,12 @@ public class ProbeServiceImplTest {
         when(missionControl.getProbeAggregateById(PROBE_ID)).thenReturn(
             createOptionalProbeAggregate(5, 7, "W"));
 
-        final ProbeResponse response = service.processInstruction(PROBE_ID, INSTRUCTION_M);
+        final Optional<ProbeAggregate> probeAggregate = service.processInstruction(PROBE_ID, INSTRUCTION_M);
 
-        assertThat(response.getDirection()).isEqualTo(DIRECTION_W);
-        assertThat(response.getX()).isEqualTo(4);
-        assertThat(response.getY()).isEqualTo(7);
+        assertThat(probeAggregate).isPresent();
+        assertThat(probeAggregate.get().getDirection()).isEqualTo(DIRECTION_W);
+        assertThat(probeAggregate.get().getXPosition()).isEqualTo(4);
+        assertThat(probeAggregate.get().getYPosition()).isEqualTo(7);
     }
 
     private ProbeCreationRequest createRequest(int x, int y, String direction) {

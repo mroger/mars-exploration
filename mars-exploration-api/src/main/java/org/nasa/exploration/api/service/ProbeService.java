@@ -1,19 +1,19 @@
 package org.nasa.exploration.api.service;
 
 import org.nasa.exploration.api.model.ProbeCreationRequest;
-import org.nasa.exploration.api.model.ProbeCreationResponse;
-import org.nasa.exploration.api.model.ProbeResponse;
+import org.nasa.exploration.model.ProbeAggregate;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProbeService {
-    ProbeCreationResponse createProbe(ProbeCreationRequest request);
+    ProbeAggregate createProbe(ProbeCreationRequest request);
 
-    List<ProbeResponse> findAllProbes();
+    List<ProbeAggregate> findAllProbes();
 
-    ProbeResponse findProbeById(String id);
+    Optional<ProbeAggregate> findProbeById(String id);
 
-    ProbeResponse findProbeByPosition(int x, int y);
+    Optional<ProbeAggregate> findProbeByPosition(int x, int y);
 
-    ProbeResponse processInstruction(String id, String instruction);
+    Optional<ProbeAggregate> processInstruction(String id, String instruction);
 }

@@ -2,7 +2,6 @@ package org.nasa.exploration.api.model;
 
 import org.nasa.exploration.api.validation.ValidateStringOptions;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class ProbeInstructionRequest {

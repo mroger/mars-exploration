@@ -1,10 +1,6 @@
 package org.nasa.exploration.api.service;
 
-import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
-import org.nasa.exploration.api.exception.ProbeNotFoundByPositionException;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
-import org.nasa.exploration.api.model.ProbeCreationResponse;
-import org.nasa.exploration.api.model.ProbeResponse;
 import org.nasa.exploration.api.service.instruction.Instruction;
 import org.nasa.exploration.api.service.instruction.InstructionFactory;
 import org.nasa.exploration.model.MissionControl;
@@ -13,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProbeServiceImpl implements ProbeService {
@@ -25,48 +20,36 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
-    public ProbeCreationResponse createProbe(ProbeCreationRequest request) {
-        final ProbeAggregate probe =
-            missionControl.createProbe(request.getX(), request.getY(), request.getDirection());
-        return ProbeCreationResponse.fromModel(probe);
+    public ProbeAggregate createProbe(ProbeCreationRequest request) {
+        return missionControl.createProbe(request.getX(), request.getY(), request.getDirection());
     }
 
     @Override
-    public List<ProbeResponse> findAllProbes() {
-        return missionControl.getRegisteredProbeAggregates().stream()
-            .map(ProbeResponse::fromModel)
-            .collect(Collectors.toList());
+    public List<ProbeAggregate> findAllProbes() {
+        return missionControl.getRegisteredProbeAggregates();
     }
 
     @Override
-    public ProbeResponse findProbeById(String id) {
+    public Optional<ProbeAggregate> findProbeById(String id) {
+        return missionControl.getProbeAggregateById(id);
+    }
+
+    @Override
+    public Optional<ProbeAggregate> findProbeByPosition(int x, int y) {
+        return missionControl.getProbeAggregateByPosition(x, y);
+    }
+
+    @Override
+    public Optional<ProbeAggregate> processInstruction(String id, String instruction) {
         final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
         if (!probeAggregate.isPresent()) {
-            throw new ProbeNotFoundByIdException(id);
-        }
-        return ProbeResponse.fromModel(probeAggregate.get());
-    }
-
-    @Override
-    public ProbeResponse findProbeByPosition(int x, int y) {
-        final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateByPosition(x, y);
-        if (!probeAggregate.isPresent()) {
-            throw new ProbeNotFoundByPositionException(x, y);
-        }
-        return ProbeResponse.fromModel(probeAggregate.get());
-    }
-
-    @Override
-    public ProbeResponse processInstruction(String id, String instruction) {
-        final Optional<ProbeAggregate> probeAggregate = missionControl.getProbeAggregateById(id);
-        if (!probeAggregate.isPresent()) {
-            throw new ProbeNotFoundByIdException(id);
+            return Optional.empty();
         }
         ProbeAggregate probeAggregateGet = probeAggregate.get();
 
         Instruction instructionImpl = InstructionFactory.makeInstruction(probeAggregateGet, instruction, missionControl);
         instructionImpl.execute();
 
-        return ProbeResponse.fromModel(probeAggregate.get());
+        return probeAggregate;
     }
 }
