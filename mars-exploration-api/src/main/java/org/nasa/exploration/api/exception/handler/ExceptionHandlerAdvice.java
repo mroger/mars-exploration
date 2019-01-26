@@ -3,6 +3,7 @@ package org.nasa.exploration.api.exception.handler;
 import org.nasa.exploration.api.exception.ProbeCollisionException;
 import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
 import org.nasa.exploration.api.exception.ProbeNotFoundByPositionException;
+import org.nasa.exploration.api.exception.ProbesNotFoundException;
 import org.nasa.exploration.model.exception.PositionAlreadyTakenException;
 import org.nasa.exploration.model.exception.PositionOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,26 @@ import java.util.Locale;
 @RestControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
+    private static final String ZERO_RESULTS = "ZERO_RESULTS";
+
     @Autowired
     private MessageSource messageSource;
 
-    private ResponseEntity<Object> createErrorResponseEntity(HttpStatus status, String message, String messageCode, Locale locale,
-            Object... params) {
+    private ResponseEntity<Object> createErrorResponseEntity(HttpStatus status, String message, String messageCode,
+            Locale locale, Object... params) {
+        return createErrorResponseEntity(status, null, message, messageCode, locale, params);
+    }
+
+    private ResponseEntity<Object> createErrorResponseEntity(HttpStatus status, String alternateStatus, String message,
+            String messageCode, Locale locale, Object... params) {
 
         String translatedMessage = message;
         if (messageCode != null) {
             translatedMessage = messageSource.getMessage(messageCode, params, locale);
         }
+        String translatedStatus = alternateStatus != null ? alternateStatus : status.name();
 
-        ErrorResponse errorResponse = createErrorResponse(status, translatedMessage);
+        ErrorResponse errorResponse = createErrorResponse(translatedStatus, translatedMessage);
 
         return new ResponseEntity<>(errorResponse, status);
     }
@@ -74,12 +83,17 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ProbeNotFoundByIdException.class)
     public final ResponseEntity<Object> probeNotFoundById(final ProbeNotFoundByIdException ex, Locale locale) {
-        return createErrorResponseEntity(HttpStatus.NOT_FOUND, null, ex.getMessage(), locale, ex.getId());
+        return createErrorResponseEntity(HttpStatus.OK, ZERO_RESULTS, null, ex.getMessage(), locale, ex.getId());
     }
 
     @ExceptionHandler(ProbeNotFoundByPositionException.class)
     public final ResponseEntity<Object> probeNotFoundByPosition(final ProbeNotFoundByPositionException ex, Locale locale) {
-        return createErrorResponseEntity(HttpStatus.NOT_FOUND, null, ex.getMessage(), locale, ex.getX(), ex.getY());
+        return createErrorResponseEntity(HttpStatus.OK, ZERO_RESULTS, null, ex.getMessage(), locale, ex.getX(), ex.getY());
+    }
+
+    @ExceptionHandler(ProbesNotFoundException.class)
+    public final ResponseEntity<Object> probesNotFound(final ProbesNotFoundException ex, Locale locale) {
+        return createErrorResponseEntity(HttpStatus.OK, ZERO_RESULTS, null, ex.getMessage(), locale);
     }
 
     @ExceptionHandler(ProbeCollisionException.class)
@@ -92,11 +106,10 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return createErrorResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage(), null, locale);
     }
 
-    private ErrorResponse createErrorResponse(HttpStatus status, String message) {
+    private ErrorResponse createErrorResponse(String status, String message) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setTimestamp(new Date());
-        errorResponse.setStatus(status.value());
-        errorResponse.setError(status.getReasonPhrase());
+        errorResponse.setStatus(status);
         errorResponse.setMessage(message);
         return errorResponse;
     }

@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class ErrorResponse {
     private Date timestamp;
-    private Integer status;
-    private String error;
+    private String status;
     private String message;
 
     public Date getTimestamp() {
@@ -24,19 +23,11 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 }

@@ -2,6 +2,7 @@ package org.nasa.exploration.api.controller;
 
 import org.nasa.exploration.api.exception.ProbeNotFoundByIdException;
 import org.nasa.exploration.api.exception.ProbeNotFoundByPositionException;
+import org.nasa.exploration.api.exception.ProbesNotFoundException;
 import org.nasa.exploration.api.model.ProbeCreationRequest;
 import org.nasa.exploration.api.model.ProbeCreationResponse;
 import org.nasa.exploration.api.model.ProbeInstructionRequest;
@@ -46,6 +47,10 @@ public class ProbeController implements IProbeController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<ProbeListResponse> findAll() {
         final List<ProbeAggregate> probes =  probeService.findAllProbes();
+
+        if (probes.isEmpty()) {
+            throw new ProbesNotFoundException();
+        }
 
         List<ProbeResponse> probeListResponse = probes.stream()
             .map(ProbeResponse::fromModel)
