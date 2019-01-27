@@ -11,6 +11,8 @@ import org.nasa.exploration.api.model.ProbeResponse;
 import org.nasa.exploration.api.service.ProbeService;
 import org.nasa.exploration.model.ProbeAggregate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/probes")
 public class ProbeController implements IProbeController {
@@ -39,6 +44,7 @@ public class ProbeController implements IProbeController {
         final ProbeAggregate createdProbe = probeService.createProbe(request);
 
         ProbeCreationResponse probeCreationResponse = ProbeCreationResponse.fromModel(createdProbe);
+        addLinks(createdProbe, probeCreationResponse);
 
         return ResponseEntity.ok(probeCreationResponse);
     }
@@ -54,6 +60,10 @@ public class ProbeController implements IProbeController {
 
         List<ProbeResponse> probeListResponse = probes.stream()
             .map(ProbeResponse::fromModel)
+            .map(pr -> {
+                addSelfLink(pr);
+                return pr;
+            })
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(new ProbeListResponse(probeListResponse));
@@ -69,6 +79,8 @@ public class ProbeController implements IProbeController {
         }
 
         final ProbeResponse probeResponse = ProbeResponse.fromModel(probe.get());
+        addAllLink(probeResponse);
+
         return ResponseEntity.ok(probeResponse);
     }
 
@@ -82,6 +94,9 @@ public class ProbeController implements IProbeController {
         }
 
         final ProbeResponse probeResponse = ProbeResponse.fromModel(probe.get());
+        addSelfLink(probeResponse);
+        addAllLink(probeResponse);
+
         return ResponseEntity.ok(probeResponse);
     }
 
@@ -94,7 +109,27 @@ public class ProbeController implements IProbeController {
             throw new ProbeNotFoundByIdException(request.getId());
         }
         final ProbeResponse probeResponse = ProbeResponse.fromModel(probe.get());
+        addSelfLink(probeResponse);
+        addAllLink(probeResponse);
 
         return ResponseEntity.ok(probeResponse);
+    }
+
+    private void addLinks(ProbeAggregate createdProbe, ProbeCreationResponse probeCreationResponse) {
+        Link allLink = linkTo(methodOn(ProbeController.class).findAll()).withRel("allProbes");
+        Link selfLink = linkTo(methodOn(ProbeController.class).findById(createdProbe.getId())).withSelfRel();
+
+        probeCreationResponse.add(allLink);
+        probeCreationResponse.add(selfLink);
+    }
+
+    private void addSelfLink(ProbeResponse probeResponse) {
+        Link selfLink = linkTo(methodOn(ProbeController.class).findById(probeResponse.getProbeId())).withSelfRel();
+        probeResponse.add(selfLink);
+    }
+
+    private void addAllLink(ProbeResponse probeResponse) {
+        Link allLink = linkTo(methodOn(ProbeController.class).findAll()).withRel("allProbes");
+        probeResponse.add(allLink);
     }
 }

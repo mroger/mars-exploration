@@ -1,20 +1,21 @@
 package org.nasa.exploration.api.model;
 
 import org.nasa.exploration.model.ProbeAggregate;
+import org.springframework.hateoas.ResourceSupport;
 
-public class ProbeCreationResponse {
+public class ProbeCreationResponse extends ResourceSupport {
 
-    private String id;
+    private String probeId;
     private Integer x;
     private Integer y;
     private String direction;
 
-    public String getId() {
-        return id;
+    public String getProbeId() {
+        return probeId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProbeId(String probeId) {
+        this.probeId = probeId;
     }
 
     public Integer getX() {
@@ -43,7 +44,7 @@ public class ProbeCreationResponse {
 
     public static ProbeCreationResponse fromModel(ProbeAggregate probe) {
         ProbeCreationResponse response = new ProbeCreationResponse();
-        response.setId(probe.getId());
+        response.setProbeId(probe.getId());
         response.setX(probe.getXPosition());
         response.setY(probe.getYPosition());
         response.setDirection(probe.getDirection());

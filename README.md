@@ -5,7 +5,7 @@ Utilizando o conceito de aggregates, foram criadas as classes do módulo mars-ex
 A classe MissionControl foi criada nesse módulo, mas como possui visibilidade pública e pode
 representar um repositório de sondas, poderia ser movida para o módulo mars-exploration-api.
 
-Foi mantida reduzida a visibilidade das classes do Aggregate Sonda para que fossem acessíveis apenas pelo Aggregate root.
+Foi mantida reduzida a visibilidade (package) das classes do Aggregate Sonda para que fossem acessíveis apenas pelo Aggregate root.
 
 ## Construindo executando a aplicação
 
@@ -25,7 +25,8 @@ Para redefinir esta área na execução da aplicação, pode-se fazer, por exemp
 `$ mvn clean spring-boot:run -Dmissioncontrol.plateau.width=30 -Dmissioncontrol.plateau.height=30`
 
 ## API para criação e controle das sondas
-A API foi documentada usando-se Swagger e pode-se experimentá-la com a aplicação em execução e acessando-se o endereço
+A API foi documentada usando-se Swagger e pode-se experimentá-la com a aplicação em execução e acessando-se o endereço.
+A API conta com HATEOAS para facilitar o acesso aos recursos pelos clientes.
 
 [Mars exploration Swagger UI](http://localhost:9890/mars-exploration/swagger-ui.html)
 

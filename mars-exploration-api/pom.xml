@@ -27,6 +27,11 @@
 		</dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.nasa.exploration</groupId>
             <artifactId>mars-exploration-model</artifactId>
             <version>1.0-SNAPSHOT</version>
