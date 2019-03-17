@@ -1,7 +1,14 @@
 package org.nasa.exploration.model.exception;
 
 public class PositionAlreadyTakenException extends RuntimeException {
-    public PositionAlreadyTakenException(String message) {
-        super(message);
+    private String id;
+
+    public PositionAlreadyTakenException(String id) {
+        super("missioncontrol.probe.position-already-taken");
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

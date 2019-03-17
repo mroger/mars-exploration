@@ -163,7 +163,7 @@ public class MissionControl {
         final ProbeAggregate probe = probesByPosition.get(position);
         if (probe != null) {
             LOGGER.warn("Position already taken by probe [{}]", probe.getId());
-            throw new PositionAlreadyTakenException("Position already taken by probe [" + probe.getId() + "]");
+            throw new PositionAlreadyTakenException(probe.getId());
         }
     }
 }

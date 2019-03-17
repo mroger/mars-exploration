@@ -78,7 +78,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PositionAlreadyTakenException.class)
     public final ResponseEntity<Object> positionAlreadyTaken(final PositionAlreadyTakenException ex, Locale locale) {
-        return createErrorResponseEntity(HttpStatus.CONFLICT, ex.getMessage(), null, locale);
+        return createErrorResponseEntity(HttpStatus.CONFLICT, null, ex.getMessage(), locale, ex.getId());
     }
 
     @ExceptionHandler(ProbeNotFoundByIdException.class)
