@@ -66,7 +66,10 @@ public class ProbeController implements IProbeController {
             })
             .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new ProbeListResponse(probeListResponse));
+        final ProbeListResponse listResponse = new ProbeListResponse(probeListResponse);
+        addAllLink(listResponse);
+
+        return ResponseEntity.ok(listResponse);
     }
 
     @Override
@@ -131,5 +134,10 @@ public class ProbeController implements IProbeController {
     private void addAllLink(ProbeResponse probeResponse) {
         Link allLink = linkTo(methodOn(ProbeController.class).findAll()).withRel("allProbes");
         probeResponse.add(allLink);
+    }
+
+    private void addAllLink(ProbeListResponse listResponse) {
+        Link allLink = linkTo(methodOn(ProbeController.class).findAll()).withRel("allProbes");
+        listResponse.add(allLink);
     }
 }

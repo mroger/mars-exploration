@@ -1,8 +1,10 @@
 package org.nasa.exploration.api.model;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import java.util.List;
 
-public class ProbeListResponse {
+public class ProbeListResponse extends ResourceSupport {
 
     private List<ProbeResponse> probeResponses;
 
